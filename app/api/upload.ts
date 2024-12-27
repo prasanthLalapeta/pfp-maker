@@ -4,11 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const config = {
     api: {
-        bodyParser: false, // Disables Next.js's default body parsing
+        bodyParser: false,
     },
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    console.log(req, 'request')
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
     try {
         if (!req.url) {
@@ -20,21 +24,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: 'Filename is required' });
         }
 
-        // Ensure fileName is a string before proceeding
-        const safeFileName = fileName as string; // Type assertion to ensure it's treated as a string
+        const safeFileName = fileName as string;
 
-        // Upload the file to Vercel Blob
         const blob = await put(safeFileName, req, {
-            access: 'public', // Make the file publicly accessible
+            access: 'public',
         });
 
-        // Prepare the metadata
         const metadata = {
-            id: uuidv4(), // Generate a unique identifier for the image
-            name: fileName, // File name
-            contentType: req.headers['content-type'] || 'application/octet-stream', // MIME type
-            url: blob.url, // Publicly accessible URL of the uploaded image
-            status: 'uploaded', // Indicates the upload is complete
+            id: uuidv4(),
+            name: fileName,
+            contentType: req.headers['content-type'] || 'application/octet-stream',
+            url: blob.url,
+            status: 'uploaded',
         };
 
         res.status(200).json(metadata);
