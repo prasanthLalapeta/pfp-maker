@@ -1,46 +1,36 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { put } from '@vercel/blob';
 import { v4 as uuidv4 } from 'uuid';
+import { NextResponse } from 'next/server';
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    console.log(req, 'request')
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
-
+export async function POST(req: Request) {
     try {
-        if (!req.url) {
-            return res.status(400).json({ error: 'Invalid request URL' });
-        }
-        const { searchParams } = new URL(req.url, `http://${req.headers.host}`);
+        // Parse the query parameters
+        const { searchParams } = new URL(req.url);
         const fileName = searchParams.get('filename');
         if (!fileName) {
-            return res.status(400).json({ error: 'Filename is required' });
+            return NextResponse.json({ error: 'Filename is required' }, { status: 400 });
         }
 
-        const safeFileName = fileName as string;
-
-        const blob = await put(safeFileName, req, {
+        // Upload the file to Vercel Blob
+        if (!req.body) {
+            return NextResponse.json({ error: 'No file content provided' }, { status: 400 });
+        }
+        const blob = await put(fileName, req.body, {
             access: 'public',
         });
 
+        // Prepare the metadata
         const metadata = {
             id: uuidv4(),
-            name: fileName,
-            contentType: req.headers['content-type'] || 'application/octet-stream',
-            url: blob.url,
-            status: 'uploaded',
+            name: fileName, // File name
+            contentType: req.headers.get('content-type') || 'application/octet-stream', // MIME type
+            url: blob.url, // Publicly accessible URL of the uploaded image
+            status: 'uploaded', // Indicates the upload is complete
         };
 
-        res.status(200).json(metadata);
+        return NextResponse.json(metadata, { status: 200 });
     } catch (error) {
         console.error('Error uploading file:', error);
-        res.status(500).json({ error: 'Failed to upload file.' });
+        return NextResponse.json({ error: 'Failed to upload file.' }, { status: 500 });
     }
 }
