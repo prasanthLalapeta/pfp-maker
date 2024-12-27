@@ -1,9 +1,9 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, CheckCircle } from "lucide-react"; // Import CheckCircle icon
 import ReactMarkdown from 'react-markdown';
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 interface DescriptionDisplayProps {
   description: string;
@@ -14,21 +14,16 @@ export default function DescriptionDisplay({
   description,
   isLoading,
 }: DescriptionDisplayProps) {
-  const { toast } = useToast();
-
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(description);
-      toast({
-        title: "Copied!",
-        description: "Description copied to clipboard",
+      console.log("Copying text:", description);
+      toast.success("Description copied successfully", {
+        icon: <CheckCircle className="w-4 h-4 text-green-500" />,
       });
     } catch (err) {
-      toast({
-        title: "Error",
-        description: "Failed to copy description",
-        variant: "destructive",
-      });
+      console.error("Copy failed:", err);
+      toast.error("Failed to copy description");
     }
   };
 

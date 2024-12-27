@@ -47,7 +47,7 @@ export async function generateImageDescription(imageMetadata: {
         experimental_attachments: experimentalAttachments,
       },
     ],
-    maxTokens: 512,
+    maxTokens: 812,
     temperature: 0.7,
     topP: 0.4,
   });
