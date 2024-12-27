@@ -15,11 +15,12 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Filename is required' }, { status: 400 });
         }
 
-        // Upload the file to Vercel Blob
+        // Ensure the request has a body
         if (!req.body) {
             return NextResponse.json({ error: 'No file content provided' }, { status: 400 });
         }
 
+        // Upload the file to Vercel Blob
         const blob = await put(fileName, req.body, {
             access: 'public', // Make the file publicly accessible
         });
