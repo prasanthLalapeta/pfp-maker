@@ -21,9 +21,6 @@ export default function Home() {
       const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
         method: 'POST',
         body: file,
-        headers: {
-          'Content-Type': file.type,
-        },
       });
 
       if (!response.ok) {
