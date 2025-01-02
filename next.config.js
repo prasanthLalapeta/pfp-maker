@@ -14,6 +14,12 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'oaidalleapiprodscus.blob.core.windows.net',
         port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: process.env.BLOB_STORE_HOSTNAME,
+        port: '',
+        pathname: '/**',
       }
     ],
   },
