@@ -20,7 +20,7 @@ export default function DescriptionDisplay({ description, isLoading }: Descripti
   };
 
   return (
-    <div className="relative min-h-[200px] rounded-lg p-4 flex items-center justify-center">
+    <div className="relative min-h-[200px] bg-muted rounded-lg p-4 flex items-center justify-center">
       {isLoading ? (
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
