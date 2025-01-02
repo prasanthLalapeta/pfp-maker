@@ -37,7 +37,7 @@ export default function ImageUpload({ onUpload }: ImageUploadProps) {
       ) : (
         <div className="space-y-2">
           <p className="text-muted-foreground">Drag & drop an image here, or click to select</p>
-          <p className="text-sm text-muted-foreground/75">Supports JPEG, PNG and WebP</p>
+          <p className="text-sm text-muted-foreground/75">Supports JPEG and PNG</p>
         </div>
       )}
     </div>

@@ -6,8 +6,8 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'PFP Maker',
-  description: 'Generate PFPs with AI',
+  title: 'Chibi PFP AI Generator',
+  description: 'Upload a headshot photo, and let AI transform it into an adorable chibi-style cartoon avatar',
 };
 
 export default function RootLayout({
