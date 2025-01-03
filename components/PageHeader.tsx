@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import BuyMeCoffeeWidget from './BuyMeCoffeeWidget';
 
 export function PageHeader() {
   return (
@@ -72,6 +73,10 @@ export function PageHeader() {
           <p className="mx-auto max-w-[600px] text-base sm:text-lg md:text-xl text-gray-600 font-quicksand font-medium px-4 md:px-0">
             Transform your photos into adorable chibi-style avatars
           </p>
+
+          <div className="mt-4">
+            <BuyMeCoffeeWidget />
+          </div>
         </div>
       </div>
     </div>

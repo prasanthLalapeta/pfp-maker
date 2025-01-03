@@ -11,7 +11,15 @@ export async function generateChibiImage(description: string): Promise<string> {
     });
 
     // Define the prompt for image generation
-    const prompt = `Okay, here's a detailed description of the headshot image, designed to guide an AI in creating a chibi-style cartoon version: ${description}`;
+    const prompt = `
+        Okay, here's a detailed description of the headshot image, designed to guide an AI in creating a chibi-style cartoon version: 
+        ${description}
+        Please ensure the following:
+        - Focus on producing one consistent, detailed chibi-style avatar based on the provided description.
+    
+        Thank you!
+    `.trim();
+
 
     try {
         // Generate the image using DALL·E

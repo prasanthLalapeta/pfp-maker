@@ -108,161 +108,163 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-background to-secondary p-8">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <PageHeader />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-8">
-            <Card className="p-6 space-y-4">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Upload className="w-5 h-5" />
-                Upload Image
-              </h2>
-              <ImageUpload onUpload={handleImageUpload} />
-            </Card>
+    <>
+      <main className="min-h-screen bg-gradient-to-b from-background to-secondary p-8">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <PageHeader />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 !mt-[5px]">
+            <div className="space-y-8">
+              <Card className="p-6 space-y-4">
+                <h2 className="text-xl font-semibold flex items-center gap-2">
+                  <Upload className="w-5 h-5" />
+                  Upload Image
+                </h2>
+                <ImageUpload onUpload={handleImageUpload} />
+              </Card>
 
-            <Card className="p-6 space-y-6 md:hidden">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Sparkles className="w-5 h-5" />
-                Image Transformation
-              </h2>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-center">Original Photo</p>
-                  <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
-                    {imagePreview ? (
-                      <img
-                        src={imagePreview}
-                        alt="Original"
-                        className="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
-                        Upload an image
-                      </div>
-                    )}
+              <Card className="p-6 space-y-6 md:hidden">
+                <h2 className="text-xl font-semibold flex items-center gap-2">
+                  <Sparkles className="w-5 h-5" />
+                  Image Transformation
+                </h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-center">Original Photo</p>
+                    <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
+                      {imagePreview ? (
+                        <img
+                          src={imagePreview}
+                          alt="Original"
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
+                          Upload an image
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-center">Chibi Version</p>
+                    <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
+                      {isGeneratingChibi ? (
+                        <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+                          <p className="text-sm text-center text-muted-foreground">
+                            Generating...
+                          </p>
+                        </div>
+                      ) : chibiImage ? (
+                        <img
+                          src={chibiImage}
+                          alt="Generated Chibi"
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
+                          Awaiting generation
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-center">Chibi Version</p>
-                  <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
-                    {isGeneratingChibi ? (
-                      <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-                        <p className="text-sm text-center text-muted-foreground">
-                          Generating...
-                        </p>
-                      </div>
-                    ) : chibiImage ? (
-                      <img
-                        src={chibiImage}
-                        alt="Generated Chibi"
-                        className="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
-                        Awaiting generation
-                      </div>
-                    )}
+                {chibiImage && (
+                  <div className="mt-6 flex justify-center">
+                    <button
+                      onClick={handleDownload}
+                      className="inline-flex items-center gap-2 px-6 py-3 text-lg font-medium text-white 
+                        bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 
+                        rounded-full shadow-lg shadow-purple-500/30 
+                        hover:shadow-purple-500/40 hover:scale-105
+                        transform transition-all duration-200 
+                        animate-pulse-slow"
+                    >
+                      <Download className="w-5 h-5" />
+                      Download Chibi Image
+                    </button>
+                  </div>
+                )}
+              </Card>
+
+              <Card className="hidden md:block p-6 space-y-6">
+                <h2 className="text-xl font-semibold flex items-center gap-2">
+                  <Sparkles className="w-5 h-5" />
+                  Image Transformation
+                </h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-center">Original Photo</p>
+                    <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
+                      {imagePreview ? (
+                        <img
+                          src={imagePreview}
+                          alt="Original"
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
+                          Upload an image
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-center">Chibi Version</p>
+                    <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
+                      {isGeneratingChibi ? (
+                        <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+                          <p className="text-sm text-center text-muted-foreground">
+                            Generating...
+                          </p>
+                        </div>
+                      ) : chibiImage ? (
+                        <img
+                          src={chibiImage}
+                          alt="Generated Chibi"
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
+                          Awaiting generation
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              {chibiImage && (
-                <div className="mt-6 flex justify-center">
-                  <button
-                    onClick={handleDownload}
-                    className="inline-flex items-center gap-2 px-6 py-3 text-lg font-medium text-white 
-                      bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 
-                      rounded-full shadow-lg shadow-purple-500/30 
-                      hover:shadow-purple-500/40 hover:scale-105
-                      transform transition-all duration-200 
-                      animate-pulse-slow"
-                  >
-                    <Download className="w-5 h-5" />
-                    Download Chibi Image
-                  </button>
-                </div>
-              )}
-            </Card>
-
-            <Card className="hidden md:block p-6 space-y-6">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Sparkles className="w-5 h-5" />
-                Image Transformation
-              </h2>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-center">Original Photo</p>
-                  <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
-                    {imagePreview ? (
-                      <img
-                        src={imagePreview}
-                        alt="Original"
-                        className="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
-                        Upload an image
-                      </div>
-                    )}
+                {chibiImage && (
+                  <div className="mt-6 flex justify-center">
+                    <button
+                      onClick={handleDownload}
+                      className="inline-flex items-center gap-2 px-6 py-3 text-lg font-medium text-white 
+                        bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 
+                        rounded-full shadow-lg shadow-purple-500/30 
+                        hover:shadow-purple-500/40 hover:scale-105
+                        transform transition-all duration-200 
+                        animate-pulse-slow"
+                    >
+                      <Download className="w-5 h-5" />
+                      Download Chibi Image
+                    </button>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-center">Chibi Version</p>
-                  <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
-                    {isGeneratingChibi ? (
-                      <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-                        <p className="text-sm text-center text-muted-foreground">
-                          Generating...
-                        </p>
-                      </div>
-                    ) : chibiImage ? (
-                      <img
-                        src={chibiImage}
-                        alt="Generated Chibi"
-                        className="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
-                        Awaiting generation
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              {chibiImage && (
-                <div className="mt-6 flex justify-center">
-                  <button
-                    onClick={handleDownload}
-                    className="inline-flex items-center gap-2 px-6 py-3 text-lg font-medium text-white 
-                      bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 
-                      rounded-full shadow-lg shadow-purple-500/30 
-                      hover:shadow-purple-500/40 hover:scale-105
-                      transform transition-all duration-200 
-                      animate-pulse-slow"
-                  >
-                    <Download className="w-5 h-5" />
-                    Download Chibi Image
-                  </button>
-                </div>
-              )}
-            </Card>
-          </div>
+                )}
+              </Card>
+            </div>
 
-          <div className="h-full">
-            <Card className="p-6 space-y-4 h-full">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                <ImageIcon className="w-5 h-5" />
-                Generated Description
-              </h2>
-              <DescriptionDisplay description={description} isLoading={isLoading} />
-            </Card>
+            <div className="h-full">
+              <Card className="p-6 space-y-4 h-full">
+                <h2 className="text-xl font-semibold flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5" />
+                  Generated Description
+                </h2>
+                <DescriptionDisplay description={description} isLoading={isLoading} />
+              </Card>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
