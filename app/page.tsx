@@ -9,6 +9,7 @@ import DescriptionDisplay from '@/components/DescriptionDisplay';
 import { generateImageDescription } from '@/lib/services/gemini';
 import { generateChibiImage } from '@/lib/services/openai';
 import { PageHeader } from '@/components/PageHeader';
+import { Footer } from '@/components/Footer';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -138,8 +139,8 @@ export default function Home() {
                           className="object-cover w-full h-full"
                         />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
-                          Upload an image
+                        <div className="flex items-center justify-center h-full text-sm text-center text-muted-foreground">
+                          Awaiting image upload
                         </div>
                       )}
                     </div>
@@ -162,7 +163,7 @@ export default function Home() {
                           className="object-cover w-full h-full"
                         />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
+                        <div className="flex items-center justify-center h-full text-sm text-center text-muted-foreground">
                           Awaiting generation
                         </div>
                       )}
@@ -204,8 +205,8 @@ export default function Home() {
                           className="object-cover w-full h-full"
                         />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
-                          Upload an image
+                        <div className="flex items-center justify-center h-full text-sm text-center text-muted-foreground">
+                          Awaiting image upload
                         </div>
                       )}
                     </div>
@@ -227,7 +228,7 @@ export default function Home() {
                           className="object-cover w-full h-full"
                         />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
+                        <div className="flex items-center justify-center h-full text-sm text-center text-muted-foreground">
                           Awaiting generation
                         </div>
                       )}
@@ -263,6 +264,7 @@ export default function Home() {
               </Card>
             </div>
           </div>
+          <Footer />
         </div>
       </main>
     </>
