@@ -17,17 +17,15 @@ export default function Home() {
   const [description, setDescription] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [chibiImage, setChibiImage] = useState<string | null>(null);
+  const [isUploadingToBlob, setIsUploadingToBlob] = useState(false);
 
   const uploadToBlob = async (base64Data: string) => {
     try {
-      // Convert base64 to blob
       const base64Response = await fetch(base64Data);
       const blob = await base64Response.blob();
 
-      // Create a file from the blob
       const file = new File([blob], 'generated-chibi.png', { type: 'image/png' });
 
-      // Upload to Vercel Blob
       const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
         method: 'POST',
         body: file,
@@ -48,6 +46,7 @@ export default function Home() {
   const handleImageUpload = async (file: File) => {
     setIsLoading(true);
     setChibiImage(null);
+    setIsUploadingToBlob(true);
     try {
       const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
         method: 'POST',
@@ -60,6 +59,7 @@ export default function Home() {
 
       const imageMetadata = await response.json();
       setImagePreview(imageMetadata.url);
+      setIsUploadingToBlob(false);
 
       // Generate description using the image metadata
       const description = await generateImageDescription(imageMetadata);
@@ -84,6 +84,7 @@ export default function Home() {
       console.error('Error processing image:', error);
       toast.error(error.message || 'An unexpected error occurred. Please try again.');
       setIsLoading(false);
+      setIsUploadingToBlob(false);
     }
   };
 
@@ -120,7 +121,10 @@ export default function Home() {
                   <Upload className="w-5 h-5" />
                   Upload Image
                 </h2>
-                <ImageUpload onUpload={handleImageUpload} />
+                <ImageUpload
+                  onUpload={handleImageUpload}
+                  isUploading={isUploadingToBlob}
+                />
               </Card>
 
               <Card className="p-6 space-y-6 md:hidden">
@@ -132,7 +136,14 @@ export default function Home() {
                   <div className="space-y-2">
                     <p className="text-sm font-medium text-center">Original Photo</p>
                     <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
-                      {imagePreview ? (
+                      {isUploadingToBlob ? (
+                        <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+                          <p className="text-sm text-center text-muted-foreground">
+                            Loading...
+                          </p>
+                        </div>
+                      ) : imagePreview ? (
                         <img
                           src={imagePreview}
                           alt="Original"
@@ -198,7 +209,14 @@ export default function Home() {
                   <div className="space-y-2">
                     <p className="text-sm font-medium text-center">Original Photo</p>
                     <div className="aspect-square rounded-lg overflow-hidden border bg-muted">
-                      {imagePreview ? (
+                      {isUploadingToBlob ? (
+                        <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+                          <p className="text-sm text-center text-muted-foreground">
+                            Loading...
+                          </p>
+                        </div>
+                      ) : imagePreview ? (
                         <img
                           src={imagePreview}
                           alt="Original"

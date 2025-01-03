@@ -6,10 +6,11 @@ import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ImageUploadProps {
-  onUpload: (file: File) => void;
+  onUpload: (file: File) => Promise<void>;
+  isUploading?: boolean;
 }
 
-export default function ImageUpload({ onUpload }: ImageUploadProps) {
+export default function ImageUpload({ onUpload, isUploading }: ImageUploadProps) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       onUpload(acceptedFiles[0]);
