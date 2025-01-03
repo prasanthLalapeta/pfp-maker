@@ -16,6 +16,7 @@ const quicksand = Quicksand({
 export const metadata: Metadata = {
   title: 'Chibi PFP AI Generator',
   description: 'Transform your photos into adorable chibi-style cartoon avatars',
+  metadataBase: new URL('https://pfp-maker-ai.vercel.app'),
   openGraph: {
     title: 'Chibi PFP AI Generator',
     description: 'Transform your photos into adorable chibi-style cartoon avatars',
@@ -28,12 +29,14 @@ export const metadata: Metadata = {
       },
     ],
     type: 'website',
+    url: 'https://pfp-maker-ai.vercel.app',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Chibi PFP AI Generator',
     description: 'Transform your photos into adorable chibi-style cartoon avatars',
     images: ['/og-native.png'],
+    creator: '@heylalapeta',
   },
   icons: {
     icon: [
@@ -43,7 +46,7 @@ export const metadata: Metadata = {
         type: 'image/png',
       }
     ],
-    shortcut: '/magic-wand.png',  // For older browsers
+    shortcut: '/magic-wand.png',
     apple: {
       url: '/magic-wand.png',
       sizes: '180x180',
